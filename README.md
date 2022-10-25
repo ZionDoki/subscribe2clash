@@ -18,6 +18,12 @@
 </p>
 
 
+## CHANGELOG
+
+*该改动仅方便于 [trojan 443 端口被封的简单解决思路](https://zgao.top/trojan-443%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%B0%81%E7%9A%84%E7%AE%80%E5%8D%95%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF/)*
+
+1. 粗暴修改了 trojan 部分的业务逻辑，当前 ?sub_link= 针对 trojan 订阅仅支持传入 trojan://xxx 链接
+
 ## 简介
 
 Clash配置转换，默认自动获取[ACL4SSR](https://github.com/ACL4SSR/ACL4SSR)路由规则。  

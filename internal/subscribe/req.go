@@ -32,12 +32,17 @@ func GetSubContent(query string) ([]string, error) {
 			continue
 		}
 
+		content = strings.ReplaceAll(content, "\n", "")
+
 		decoded, err := xbase64.Base64DecodeStripped(content)
 		if err != nil {
 			log.Println("base64 decode err:", err)
 			continue
 		}
-		contentSlice = append(contentSlice, string(decoded))
+
+		decoded_str := strings.ReplaceAll(string(decoded), "\n", "")
+
+		contentSlice = append(contentSlice, decoded_str)
 	}
 
 	return contentSlice, nil

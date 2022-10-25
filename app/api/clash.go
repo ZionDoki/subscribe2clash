@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -31,7 +32,9 @@ func (cc *ClashController) Clash(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("> " + val)
 	content, err := subscribe.GetSubContent(val)
+	fmt.Println(content)
 	if err != nil {
 		c.String(http.StatusBadRequest, "请求失败:"+err.Error())
 		c.Abort()
@@ -39,6 +42,7 @@ func (cc *ClashController) Clash(c *gin.Context) {
 	}
 
 	proxies := subscribe.ParseProxy(content)
+	// fmt.Println(proxies)
 	config, err := subscribe.GenerateClashConfig(proxies)
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())

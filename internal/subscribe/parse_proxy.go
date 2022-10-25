@@ -23,8 +23,9 @@ var (
 	ssReg2 = regexp.MustCompile(`(?m)ss://([\-0-9a-z]+):(.+)@(.+):(\d+)(.+)?#(.+)`)
 	ssReg  = regexp.MustCompile(`(?m)ss://([/+=\w]+)(@.+)?#(.+)`)
 
-	trojanReg  = regexp.MustCompile(`(?m)^trojan://(.+)@(.+):(\d+)\?allowInsecure=\d&peer=(.+)#(.+)`)
+	trojanReg  = regexp.MustCompile(`(?m)^trojan://(.+)@(.+):(\d+)\?peer=(.+?)&.+#(.+)`)
 	trojanReg2 = regexp.MustCompile(`(?m)^trojan://(.+)@(.+):(\d+)#(.+)$`)
+	// trojanReg3 = regexp.MustCompile()
 )
 
 func ParseProxy(contentSlice []string) []any {
@@ -70,7 +71,7 @@ func parseProxy(proxy string) any {
 	case strings.HasPrefix(proxy, ssPrefix):
 		return ssConf(subProtocolBody(proxy, ssPrefix))
 	case strings.HasPrefix(proxy, trojanPrefix):
-		return trojanConf(subProtocolBody(proxy, trojanPrefix))
+		return trojanConf(proxy)
 	}
 
 	return nil
@@ -288,6 +289,7 @@ func ssConf(s string) ClashSS {
 
 func trojanConf(s string) Trojan {
 	s, err := url.PathUnescape(s)
+
 	if err != nil {
 		return Trojan{}
 	}
